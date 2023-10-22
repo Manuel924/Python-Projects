@@ -1,0 +1,71 @@
+import 'dart:io';
+
+class RegistroTareas {
+  List<String> tareas = [];
+
+  void agregarTarea() {
+    print("Ingrese una nueva tarea: ");
+    String tarea = stdin.readLineSync()!;
+    tareas.add(tarea);
+    print("Tarea agregada con éxito.");
+  }
+
+  void mostrarTareas() {
+    if (tareas.isEmpty) {
+      print("No hay tareas en el registro.");
+    } else {
+      print("Tareas:");
+      for (int i = 0; i < tareas.length; i++) {
+        print("${i + 1}. ${tareas[i]}");
+      }
+    }
+  }
+
+  void eliminarTarea() {
+    mostrarTareas();
+    if (tareas.isEmpty) {
+      return;
+    }
+
+    print("Ingrese el número de la tarea a eliminar: ");
+    int numeroTarea = int.parse(stdin.readLineSync()!);
+
+    if (numeroTarea <= 0 || numeroTarea > tareas.length) {
+      print("Número de tarea inválido.");
+    } else {
+      String tareaEliminada = tareas.removeAt(numeroTarea - 1);
+      print("Tarea '$tareaEliminada' eliminada con éxito.");
+    }
+  }
+}
+
+void main() {
+  RegistroTareas registro = RegistroTareas();
+
+  while (true) {
+    print("\n-- REGISTRO DE TAREAS --");
+    print("1. Agregar tarea");
+    print("2. Mostrar tareas");
+    print("3. Eliminar tarea");
+    print("4. Salir");
+
+    String opcion = stdin.readLineSync()!;
+
+    switch (opcion) {
+      case "1":
+        registro.agregarTarea();
+        break;
+      case "2":
+        registro.mostrarTareas();
+        break;
+      case "3":
+        registro.eliminarTarea();
+        break;
+      case "4":
+        print("¡Hasta luego!");
+        return;
+      default:
+        print("Opción inválida. Por favor, ingrese un número válido.");
+    }
+  }
+}
